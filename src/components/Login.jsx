@@ -1,10 +1,22 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import movie_bg from "../assets/images/movie_bg.jpg";
 
 const Login = () => {
-  const [isSignIn, setIsSignIn] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(true);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const toggleForm = () => setIsSignIn(!isSignIn);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    // Handle form submission logic here
+  };
 
   return (
     <div className="relative py-24">
@@ -18,31 +30,59 @@ const Login = () => {
       </div>
       <div className="z-10 relative text-white">
         <div className="w-5/12 mt-6 mx-auto rounded-2xl bg-black/50 p-[80px]">
-          <h1 className="font-bold text-2xl mb-5">{isSignIn ? "Sign In": "Sign Up"}</h1>
-          <form action="">
-            {!isSignIn && <input
-              className="h-12 p-4 bg-black/60 w-full border border-white rounded-[5px] mb-4"
-              type="text"
-              name="name"
-              placeholder="Name"
-            />}
+          <h1 className="font-bold text-2xl mb-5">
+            {isSignIn ? "Sign In" : "Sign Up"}
+          </h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {!isSignIn && (
+              <input
+                className="h-12 p-4 bg-black/60 w-full border border-white rounded-[5px] mb-4"
+                type="text"
+                name="name"
+                placeholder="Name"
+                {...register("name", {
+                  required: "Name is required",
+                  minLength: {
+                    value: 2,
+                    message: "Name must be at least 2 characters",
+                  },
+                })}
+              />
+            )}
+            {errors.name && <p className="text-red-500 mb-2 text-[14px]">{errors.name.message}</p>}
             <input
               className="h-12 p-4 bg-black/60 w-full border border-white rounded-[5px] mb-4"
               type="email"
               name="email"
               placeholder="Email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Invalid email address",
+                },
+              })}
             />
+            {errors.email && <p className="text-red-500 mb-2 text-[14px]">{errors.email.message}</p>}
             <input
               className="h-12 p-4 bg-black/60 w-full border border-white rounded-[5px] mb-4"
               type="password"
               name="password"
               placeholder="Password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
             />
-            <button className="bg-red-600 text-white w-full rounded-[5px] px-4 py-2">
-              Sign In
+            {errors.password && <p className="text-red-500 mb-2 text-[14px]">{errors.password.message}</p>}
+            <button className="bg-red-600 text-white w-full rounded-[5px] px-4 py-2 cursor-pointer">
+              {isSignIn ? "Sign In" : "Sign Up"}
             </button>
             <p onClick={toggleForm} className="text-sm mt-5 cursor-pointer">
-              {isSignIn ? (
+              {!isSignIn ? (
                 <>
                   <span className="text-gray-400">Already registered.</span>{" "}
                   Click to Sign in now
