@@ -3,6 +3,12 @@
 - Configure Tailwind CSS
 - Create Components
 - Add routing for home & login
+- Create login/signup form
+- Add React Form hook for validation
+- Setup firebase
+- Create app store
+- Create user slice
+- Setup Auth via firebase 
 
 # Feature
 - Sign/sign up 

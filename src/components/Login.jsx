@@ -1,9 +1,23 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithEmailAndPassword
+} from "firebase/auth";
 import movie_bg from "../assets/images/movie_bg.jpg";
+import { auth } from "./../../firebase";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
+  const [apiError, setApiError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -13,9 +27,51 @@ const Login = () => {
 
   const toggleForm = () => setIsSignIn(!isSignIn);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission logic here
+  const onSubmit = async ({ email, password, name }) => {
+    setIsLoading(true);
+    if (isSignIn) {
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        navigate("/browse");  
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setApiError(errorCode + " - " + errorMessage);
+        setIsLoading(false);
+      }
+    } else {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        const user = userCredential.user;
+
+        // Update user's display name
+        await updateProfile(user, {
+          displayName: name,
+        });
+
+        // console.log('app', auth.currentUser.email)
+        // const { uid, displayName = name, email } = auth.currentUser;
+        dispatch(setUser({ uid: auth?.currentUser?.uid, displayName: name, email: auth?.currentUser?.email }));
+
+        navigate("/browse");
+
+        console.log("User signed up:", user);
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setApiError(errorCode + " - " + errorMessage);
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -49,7 +105,11 @@ const Login = () => {
                 })}
               />
             )}
-            {errors.name && <p className="text-red-500 mb-2 text-[14px]">{errors.name.message}</p>}
+            {errors.name && (
+              <p className="text-red-500 mb-2 text-[14px]">
+                {errors.name.message}
+              </p>
+            )}
             <input
               className="h-12 p-4 bg-black/60 w-full border border-white rounded-[5px] mb-4"
               type="email"
@@ -63,7 +123,11 @@ const Login = () => {
                 },
               })}
             />
-            {errors.email && <p className="text-red-500 mb-2 text-[14px]">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 mb-2 text-[14px]">
+                {errors.email.message}
+              </p>
+            )}
             <input
               className="h-12 p-4 bg-black/60 w-full border border-white rounded-[5px] mb-4"
               type="password"
@@ -77,9 +141,24 @@ const Login = () => {
                 },
               })}
             />
-            {errors.password && <p className="text-red-500 mb-2 text-[14px]">{errors.password.message}</p>}
-            <button className="bg-red-600 text-white w-full rounded-[5px] px-4 py-2 cursor-pointer">
-              {isSignIn ? "Sign In" : "Sign Up"}
+            {errors.password && (
+              <p className="text-red-500 mb-2 text-[14px]">
+                {errors.password.message}
+              </p>
+            )}
+
+            {apiError && (
+              <p className="text-red-500 mb-2 text-[14px]">{apiError}</p>
+            )}
+
+            <button
+              className={`bg-red-600 text-white w-full rounded-[5px] px-4 py-2 cursor-pointer ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'wait...' : isSignIn ? "Sign In" : "Sign Up" }
             </button>
             <p onClick={toggleForm} className="text-sm mt-5 cursor-pointer">
               {!isSignIn ? (
