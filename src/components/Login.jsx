@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   createUserWithEmailAndPassword,
@@ -16,8 +15,6 @@ const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [apiError, setApiError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   const {
     register,
@@ -36,7 +33,7 @@ const Login = () => {
           email,
           password
         );
-        navigate("/browse");  
+       
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -58,13 +55,8 @@ const Login = () => {
           displayName: name,
         });
 
-        // console.log('app', auth.currentUser.email)
-        // const { uid, displayName = name, email } = auth.currentUser;
         dispatch(setUser({ uid: auth?.currentUser?.uid, displayName: name, email: auth?.currentUser?.email }));
-
-        navigate("/browse");
-
-        console.log("User signed up:", user);
+      
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;

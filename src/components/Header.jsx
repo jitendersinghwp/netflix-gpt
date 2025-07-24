@@ -1,23 +1,35 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { setUser, clearUser } from "../utils/userSlice";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
 import logo from "../assets/images/logo.png";
 const Header = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  console.log(user);
-  const handleSignOut = async () => {
-    await signOut(auth);
-    navigate("/login");
-  };
+
+  const handleSignOut = async () => await signOut(auth);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, displayName, email } = user;
+        dispatch(setUser({ uid, displayName, email }));
+        navigate("/browse");
+      } else {
+        dispatch(clearUser());
+        navigate("/login");
+      }
+    });
+
+    return () => {
+      unsubscribe();
     }
-  }, [user, navigate]);
+
+    
+  }, []);
 
   return (
     <div className="absolute w-8/12 mx-auto left-0 right-0 px-4 py-5 flex z-10 justify-between items-center">
