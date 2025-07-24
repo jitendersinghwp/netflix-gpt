@@ -10,7 +10,7 @@
 - Create user slice
 - Setup Auth via firebase 
 - Fix for user redirection 
-- Unsubscribe the Firebase Auth state change function on unmount.
+- Unsubscribe the Firebase Auth state change function on unmount
 
 # Feature
 - Sign/sign up 
