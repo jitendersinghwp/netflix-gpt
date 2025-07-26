@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword
 } from "firebase/auth";
 import movie_bg from "../assets/images/movie_bg.jpg";
-import { auth } from "./../../firebase";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const dispatch = useDispatch();

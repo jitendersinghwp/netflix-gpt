@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser, clearUser } from "../utils/userSlice";
 import { signOut, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "../utils/firebase";
 import logo from "../assets/images/logo.png";
 const Header = () => {
   const dispatch = useDispatch();
