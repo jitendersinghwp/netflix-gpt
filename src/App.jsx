@@ -1,6 +1,6 @@
-import { Provider } from "react-redux"
-import Body from "./components/Body"
-import appStore from "./utils/appStore"
+import { Provider } from "react-redux";
+import Body from "./components/Body";
+import appStore from "./utils/appStore";
 
 function App() {
   return (
@@ -10,4 +10,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
