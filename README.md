@@ -11,6 +11,12 @@
 - Setup Auth via firebase 
 - Fix for user redirection 
 - Unsubscribe the Firebase Auth state change function on unmount
+- Set up account and take auth token form TMDB API
+- Fetch movie data nowPlayingMovies api 
+- Create custom hook for nowPlayingMovies
+- Get video data form movie API
+- Create custom hook for movieTeaser
+- make UI for Brower with background Teaser and movie Info
 
 # Feature
 - Sign/sign up 

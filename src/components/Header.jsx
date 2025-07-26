@@ -36,7 +36,7 @@ const Header = () => {
       <div>
         <img className="h-16" src={logo} alt="logo" />
       </div>
-      {user && <button className="px-4 py-2 text-[14px] bg-red-600 text-white rounded-[5px]" onClick={handleSignOut}>Sign Out</button>}
+      {user && <button className="px-4 py-2 text-[14px] bg-red-600 text-white rounded-[5px] cursor-pointer" onClick={handleSignOut}>Sign Out</button>}
     </div>
   );
 };
