@@ -13,7 +13,7 @@ const Teaser = () => {
         </div>
         
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-black/60"></div>
             <TeaserVideo movieId={firstMovie?.id} />
         </div>
     </div>
