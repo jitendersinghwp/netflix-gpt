@@ -3,8 +3,10 @@ import TeaserInfo from "./TeaserInfo";
 import TeaserVideo from "./TeaserVideo";
 
 const Teaser = () => {
-  const movies = useSelector((state) => state.movies);  
-  const firstMovie = movies?.nowPlayingMovies?.[0] || {};
+  const nowPlayingMovies = useSelector((state) => state.movies.nowPlayingMovies);  
+  const firstMovie = nowPlayingMovies?.[0] || {};
+
+  if(Object.keys('firstMovie').length === 0) return;
 
   return (
     <div className="relative h-screen w-full pt-40 px-16">
