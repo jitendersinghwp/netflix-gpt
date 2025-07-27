@@ -4,7 +4,7 @@ import TeaserVideo from "./TeaserVideo";
 
 const Teaser = () => {
   const movies = useSelector((state) => state.movies);  
-  const firstMovie = movies?.noPlayingMovies?.[0] || {};
+  const firstMovie = movies?.nowPlayingMovies?.[0] || {};
 
   return (
     <div className="relative h-screen w-full pt-40 px-16">

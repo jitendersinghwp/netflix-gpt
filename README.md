@@ -17,6 +17,10 @@
 - Get video data form movie API
 - Create custom hook for movieTeaser
 - make UI for Brower with background Teaser and movie Info
+- Get TMDB image url and set as const
+- Fetch different type of movie lists from TMDB api and make custom hooks 
+- Update movie store accoding to the types of movies
+- Create UI for movies list
 
 # Feature
 - Sign/sign up 

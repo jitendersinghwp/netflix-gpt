@@ -7,8 +7,6 @@ const TeaserVideo = ({ movieId }) => {
 
   if (!movieTeaser) return;
 
-  console.log("movie Teasor", movieTeaser);
-
   return (
     <iframe
       className="w-full h-full"
