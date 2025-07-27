@@ -10,14 +10,12 @@ const TeaserVideo = ({ movieId }) => {
   return (
     <iframe
       className="w-full h-full"
-      src={
-        "https://www.youtube.com/embed/" +
-        movieTeaser?.key +
-        "?autoplay=1&mute=1"
-      }
+      width="560"
+      height="315"
+      src={`https://www.youtube.com/embed/${movieTeaser?.key}?si=tmzKVZN4zkZ4JaBN&autoplay=1&mute=1`}
       title="YouTube video player"
       frameBorder="0"
-      allow="accelerometer; autoplay;"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       referrerPolicy="strict-origin-when-cross-origin"
       allowFullScreen
     ></iframe>
