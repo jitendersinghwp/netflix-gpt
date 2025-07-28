@@ -8,14 +8,17 @@ export const MovieList = ({ title, movies }) => {
       </div>
 
       <div className="flex gap-2.5 overflow-x-auto">
-        {movies.map((movie) => (
-          <div key={movie.id} className="w-[150px] shrink-0">
-            <MovieCard
-              posterPath={movie?.poster_path}
-              title={movie?.title}
-            />
-          </div>
-        ))}
+        {movies.map(
+          (movie) =>
+            movie?.poster_path && (
+              <div key={movie.id} className="w-[150px] shrink-0">
+                <MovieCard
+                  posterPath={movie?.poster_path}
+                  title={movie?.title}
+                />
+              </div>
+            )
+        )}
       </div>
     </div>
   );
