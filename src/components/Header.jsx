@@ -39,7 +39,7 @@ const Header = () => {
         <img className="h-16" src={logo} alt="logo" />
       </div>
       {user && (
-        <div class="relative inline-block group">
+        <div className="relative inline-block group">
           <button className="flex gap-1.5 items-center pb-2.5">
             <img src={profile} className="rounded-[5px]" alt="Profile" />
             <span className="inline-block align-middle w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-white"></span>
