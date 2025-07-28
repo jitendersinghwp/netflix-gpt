@@ -1,16 +1,20 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { setUser, clearUser } from "../utils/userSlice";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import logo from "../assets/images/logo.png";
+import profile from "../assets/images/profile.png";
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const handleSignOut = async () => await signOut(auth);
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+    await signOut(auth)
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -26,9 +30,7 @@ const Header = () => {
 
     return () => {
       unsubscribe();
-    }
-
-    
+    };
   }, []);
 
   return (
@@ -36,7 +38,29 @@ const Header = () => {
       <div>
         <img className="h-16" src={logo} alt="logo" />
       </div>
-      {user && <button className="px-4 py-2 text-[14px] bg-red-600 text-white rounded-[5px] cursor-pointer" onClick={handleSignOut}>Sign Out</button>}
+      {user && (
+        <div class="relative inline-block group">
+          <button className="flex gap-1.5 items-center pb-2.5">
+            <img src={profile} className="rounded-[5px]" alt="Profile" />
+            <span className="inline-block align-middle w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-white"></span>
+          </button>
+          <div className="absolute left-0 top-[calc(100%+10px)] w-40 text-white bg-black border border-gray-400 rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
+            <Link to="#" className="block px-4 py-2 text-[12px] hover:underline">
+              User 1
+            </Link>
+            <Link to="#" className="block px-4 py-2 text-[12px] hover:underline">
+              User 2
+            </Link>
+            <Link to="#" className="block px-4 py-2 text-[12px] hover:underline">
+              User 3
+            </Link>
+            <hr className="border-gray-500" />
+            <Link to="#" onClick={handleSignOut} className="block px-4 py-2 text-[12px] hover:underline">
+              Sign out of Netflix
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
