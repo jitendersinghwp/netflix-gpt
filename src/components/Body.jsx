@@ -13,7 +13,7 @@ const Body = () => {
       element: <Layout />,
       errorElement: <Error />,
       children: [
-        { index: true, element: <Home /> },
+        { index: true, element: <Login /> },
         { path: "/login", element: <Login /> },
          { path: "/browse", element: <Browse /> },
       ],
